@@ -190,7 +190,8 @@ const ECommerce: React.FC = () => {
     <div>
       <h3 className="text-sm font-medium">Total Estimated Earnings</h3>
       <p className="text-2xl font-bold">
-        {resumeStats ? resumeStats.estimated_earnings : "Loading..."}
+        {/* {resumeStats ? resumeStats.estimated_earnings : "Loading..."} */}
+        30000.00
       </p>
     </div>
     <div className="text-3xl bg-zinc-700 p-2 rounded-md">
@@ -203,7 +204,8 @@ const ECommerce: React.FC = () => {
     <div>
       <h3 className="text-sm font-medium">Joining Bonus</h3>
       <p className="text-2xl font-bold">
-        {resumeStats ? resumeStats.joining_bonus : "Loading..."}
+        {/* {resumeStats ? resumeStats.joining_bonus : "Loading..."} */}
+        2000.00
       </p>
     </div>
     <div className="text-3xl bg-zinc-700 p-2 rounded-md">
