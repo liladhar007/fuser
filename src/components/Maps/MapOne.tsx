@@ -78,12 +78,22 @@ const MapOne: React.FC = () => {
         Get Expert Help | Connect with Professionals | Get<br/> your Job Done
       </h4>
       <div className="flex flex-col gap-4">
-        <button className="w-full py-3 rounded-md bg-green-500 text-white text-lg font-medium mt-10">
-          Contact To Customer Support
-        </button>
-        <button className="w-full py-3 rounded-md bg-blue-500 text-white text-lg font-medium mt-5">
-          Get Extra Days & Help
-        </button>
+     
+        <a 
+  href="https://wa.me/917665025123" 
+  target="_blank" 
+  rel="noopener noreferrer"
+>
+  <button className="w-full py-3 rounded-md bg-green-500 text-white text-lg font-medium mt-10">
+    Contact To Customer Support
+  </button>
+</a>
+<a href="mailto:resumework071@gmail.com">
+  <button className="w-full py-3 rounded-md bg-blue-500 text-white text-lg font-medium mt-5">
+    Get Extra Days & Help
+  </button>
+</a>
+
       </div>
     </div>
   );

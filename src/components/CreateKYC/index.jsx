@@ -234,6 +234,42 @@ const CreateKYC = () => {
               />
             </div>
           </div>
+          <div className="-mx-3 mb-2 flex flex-wrap">
+            <div className="w-full p-3 md:w-1/2 xl:w-1/2">
+              <label
+                htmlFor="id_p"
+                className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
+              >
+Address proof
+</label>
+              <select
+                id="id_p"
+                value={idProofType}
+                onChange={(e) => setIdProofType(e.target.value)}
+                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm dark:bg-gray-700 dark:text-white"
+              >
+                <option value="Electricity Bill">Electricity Bill</option>
+                <option value="Watter Bill ">Watter Bill </option>
+                <option value="Gas Bill">Gas Bill</option>
+                <option value="Other Utility Bill ">Other Utility Bill</option>
+              </select>
+            </div>
+            <div className="w-full p-3 md:w-1/2 xl:w-1/2">
+              <label
+                className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
+                htmlFor="user_avatar"
+              >
+                Choose File  (only pdf file allowed)
+              </label>
+              <input
+                className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+                id="user_avatar"
+                type="file"
+                accept=".pdf"
+                onChange={handleFileChange}
+              />
+            </div>
+          </div>
           <div className="mt-8 flex justify-end">
             <button
               type="submit"
@@ -245,7 +281,7 @@ const CreateKYC = () => {
         </form>
       </div>
     </div>
-  );
+  );      
 };
 
 export default CreateKYC;
