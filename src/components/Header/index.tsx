@@ -167,7 +167,7 @@ const Header = (props: {
       new Date(data.start_date).setDate(new Date(data.start_date).getDate() + 5)
     ).toLocaleDateString("en-GB")
   : "N/A"}
-
+{/* {JSON.stringify(data)} */}
             </h5>{" "}
           </div>
         </div>
