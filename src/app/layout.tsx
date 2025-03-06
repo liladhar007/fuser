@@ -6,6 +6,8 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { usePathname, useRouter } from "next/navigation";
+import  { ProfileProvider }  from "../context/ProfileContext"; 
+
 
 export default function RootLayout({
   children,
@@ -58,7 +60,13 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
+          {/* {loading ? <Loader /> : children} */}
+          {loading ? (
+            <Loader />
+          ) : (
+            // ✅ Wrap children with ProfileProvider
+            <ProfileProvider>{children}</ProfileProvider>
+          )}
         </div>
       </body>
     </html>

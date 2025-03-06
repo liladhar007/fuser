@@ -108,152 +108,6 @@
 
 
 
-"use client";
-
-import { useState } from "react";
-import Breadcrumb from "../Breadcrumbs/Breadcrumb";
-import { useRouter } from "next/navigation";
-import { toast, ToastContainer } from "react-toastify";
-import { ArrowLeftIcon } from "@heroicons/react/outline";
-
-const CreateKYC = () => {
-  const router = useRouter();
-  const [file, setFile] = useState(null);
-  const [idProofType, setIdProofType] = useState("Aadhar Card");
-
-  // Navigate back to the profile page
-  const handleBackClick = () => {
-    router.push("/profile");
-  };
-
-  // Handle file selection
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const freelancerId = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
-
-    if (!freelancerId || !token) {
-      toast.error("User session expired. Please log in again.");
-      return;
-    }
-
-    if (!file) {
-      toast.error("Please upload a file before submitting.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("document", file);
-    formData.append("idProofType", idProofType);
-
-    try {
-      const response = await fetch(
-        `https://f-backend-fgtt.onrender.com/resumes/uploadAddressProof/${freelancerId}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`, // Corrected syntax for the token
-          },
-          body: formData,
-        }
-      );
-
-      if (response.ok) {
-        toast.success("ID proof uploaded successfully!");
-        setTimeout(() => {
-          router.push("/profile"); 
-        }, 3000); 
-        
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message || "Failed to upload ID proof.");
-      }
-    } catch (error) {
-      console.error("Error uploading ID proof:", error);
-      toast.error("Something went wrong. Please try again.");
-    }
-  };
-
-  return (
-    <div className="mx-auto max-w-7xl">
-      <ToastContainer />
-      <Breadcrumb pageName="Create KYC" />
-      <div className="mb-2 text-end justify-end">
-        <div className="flex justify-end mb-2">
-          <button
-            type="button"
-            onClick={handleBackClick}
-            className="flex items-center rounded-full bg-red-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-red-800"
-          >
-            <ArrowLeftIcon className="h-5 w-5 me-2" />
-            Back
-          </button>
-        </div>
-        <form
-          onSubmit={handleSubmit}
-          className="mx-auto w-full rounded-lg border border-gray-300 p-3"
-        >
-          <div className="-mx-3 mb-2 flex flex-wrap">
-            <div className="w-full p-3 md:w-1/2 xl:w-1/2">
-              <label
-                htmlFor="id_p"
-                className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Select ID Proof
-              </label>
-              <select
-                id="id_p"
-                value={idProofType}
-                onChange={(e) => setIdProofType(e.target.value)}
-                className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm dark:bg-gray-700 dark:text-white"
-              >
-                <option value="Aadhar Card">Aadhar Card</option>
-                <option value="Pass Port">Pass Port</option>
-                <option value="Votter Id">Votter Id</option>
-              </select>
-            </div>
-            <div className="w-full p-3 md:w-1/2 xl:w-1/2">
-              <label
-                className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor="user_avatar"
-              >
-                Choose File  (only pdf file allowed)
-              </label>
-              <input
-                className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                id="user_avatar"
-                type="file"
-                accept=".pdf"
-                onChange={handleFileChange}
-              />
-            </div>
-          </div>
-
-          <div className="mt-8 flex justify-end">
-            <button
-              type="submit"
-              className="rounded bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );      
-};
-
-export default CreateKYC;
-
-
-
-
 // "use client";
 
 // import { useState } from "react";
@@ -264,21 +118,17 @@ export default CreateKYC;
 
 // const CreateKYC = () => {
 //   const router = useRouter();
-
-//   // State for ID Proof
-//   const [idProofFile, setIdProofFile] = useState(null);
+//   const [file, setFile] = useState(null);
 //   const [idProofType, setIdProofType] = useState("Aadhar Card");
-
-//   // State for Address Proof
-//   const [addressProofFile, setAddressProofFile] = useState(null);
-//   const [addressProofType, setAddressProofType] = useState("Electricity Bill");
-
-//   // Loading state
-//   const [loading, setLoading] = useState(false);
 
 //   // Navigate back to the profile page
 //   const handleBackClick = () => {
 //     router.push("/profile");
+//   };
+
+//   // Handle file selection
+//   const handleFileChange = (e) => {
+//     setFile(e.target.files[0]);
 //   };
 
 //   // Handle form submission
@@ -293,45 +143,41 @@ export default CreateKYC;
 //       return;
 //     }
 
-//     if (!idProofFile || !addressProofFile) {
-//       toast.error("Please upload both ID proof and Address proof before submitting.");
+//     if (!file) {
+//       toast.error("Please upload a file before submitting.");
 //       return;
 //     }
 
-//     setLoading(true); // Start loading
-
 //     const formData = new FormData();
-//     formData.append("idProofDocument", idProofFile);
+//     formData.append("document", file);
 //     formData.append("idProofType", idProofType);
-//     formData.append("addressProofDocument", addressProofFile);
-//     formData.append("addressProofType", addressProofType);
 
 //     try {
 //       const response = await fetch(
-//         `https://f-backend-fgtt.onrender.com/resumes/uploadAadharCard/${freelancerId}`,
+//         // `https://f-backend-fgtt.onrender.com/resumes/uploadAddressProof/${freelancerId}`,
+//     ` https://f-backend-fgtt.onrender.com/resumes/uploadAddressProof/${freelancerId}`,
 //         {
 //           method: "POST",
 //           headers: {
-//             Authorization: `Bearer ${token}`,
+//             Authorization: `Bearer ${token}`, // Corrected syntax for the token
 //           },
 //           body: formData,
 //         }
 //       );
 
 //       if (response.ok) {
-//         toast.success("Documents uploaded successfully!");
+//         toast.success("ID proof uploaded successfully!");
 //         setTimeout(() => {
-//           router.push("/profile");
-//         }, 3000);
+//           router.push("/profile"); 
+//         }, 3000); 
+        
 //       } else {
 //         const errorData = await response.json();
-//         toast.error(errorData.message || "Failed to upload documents.");
+//         toast.error(errorData.message || "Failed to upload ID proof.");
 //       }
 //     } catch (error) {
-//       console.error("Error uploading documents:", error);
+//       console.error("Error uploading ID proof:", error);
 //       toast.error("Something went wrong. Please try again.");
-//     } finally {
-//       setLoading(false); // Stop loading
 //     }
 //   };
 
@@ -354,77 +200,38 @@ export default CreateKYC;
 //           onSubmit={handleSubmit}
 //           className="mx-auto w-full rounded-lg border border-gray-300 p-3"
 //         >
-//           {/* ID Proof Section */}
 //           <div className="-mx-3 mb-2 flex flex-wrap">
 //             <div className="w-full p-3 md:w-1/2 xl:w-1/2">
 //               <label
-//                 htmlFor="id_proof"
+//                 htmlFor="id_p"
 //                 className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
 //               >
 //                 Select ID Proof
 //               </label>
 //               <select
-//                 id="id_proof"
+//                 id="id_p"
 //                 value={idProofType}
 //                 onChange={(e) => setIdProofType(e.target.value)}
 //                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm dark:bg-gray-700 dark:text-white"
 //               >
 //                 <option value="Aadhar Card">Aadhar Card</option>
-//                 <option value="Passport">Passport</option>
-//                 <option value="Voter ID">Voter ID</option>
+//                 <option value="Pass Port">Pass Port</option>
+//                 <option value="Votter Id">Votter Id</option>
 //               </select>
 //             </div>
 //             <div className="w-full p-3 md:w-1/2 xl:w-1/2">
 //               <label
-//                 htmlFor="id_proof_file"
 //                 className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
+//                 htmlFor="user_avatar"
 //               >
-//                 Upload ID Proof (PDF only)
+//                 Choose File  (only pdf file allowed)
 //               </label>
 //               <input
-//                 id="id_proof_file"
+//                 className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+//                 id="user_avatar"
 //                 type="file"
 //                 accept=".pdf"
-//                 onChange={(e) => setIdProofFile(e.target.files[0])}
-//                 className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-//               />
-//             </div>
-//           </div>
-
-//           {/* Address Proof Section */}
-//           <div className="-mx-3 mb-2 flex flex-wrap">
-//             <div className="w-full p-3 md:w-1/2 xl:w-1/2">
-//               <label
-//                 htmlFor="address_proof"
-//                 className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
-//               >
-//                 Select Address Proof
-//               </label>
-//               <select
-//                 id="address_proof"
-//                 value={addressProofType}
-//                 onChange={(e) => setAddressProofType(e.target.value)}
-//                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm dark:bg-gray-700 dark:text-white"
-//               >
-//                 <option value="Electricity Bill">Electricity Bill</option>
-//                 <option value="Water Bill">Water Bill</option>
-//                 <option value="Gas Bill">Gas Bill</option>
-//                 <option value="Other Utility Bill">Other Utility Bill</option>
-//               </select>
-//             </div>
-//             <div className="w-full p-3 md:w-1/2 xl:w-1/2">
-//               <label
-//                 htmlFor="address_proof_file"
-//                 className="mb-2 block text-left text-sm font-medium text-gray-900 dark:text-white"
-//               >
-//                 Upload Address Proof (PDF only)
-//               </label>
-//               <input
-//                 id="address_proof_file"
-//                 type="file"
-//                 accept=".pdf"
-//                 onChange={(e) => setAddressProofFile(e.target.files[0])}
-//                 className="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
+//                 onChange={handleFileChange}
 //               />
 //             </div>
 //           </div>
@@ -432,26 +239,176 @@ export default CreateKYC;
 //           <div className="mt-8 flex justify-end">
 //             <button
 //               type="submit"
-//               disabled={loading}
-//               className={`flex items-center rounded bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+//               className="rounded bg-blue-600 px-6 py-2 text-white transition hover:bg-blue-700"
 //             >
-//               {loading ? (
-//                 <>
-//                   <svg className="animate-spin h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24">
-//                     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-//                     <path fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-//                   </svg>
-//                   Loading...
-//                 </>
-//               ) : (
-//                 "Submit"
-//               )}
+//               Submit
 //             </button>
 //           </div>
 //         </form>
 //       </div>
 //     </div>
-//   );
+//   );      
 // };
 
 // export default CreateKYC;
+
+"use client";
+
+import { useState } from "react";
+import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useRouter } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
+
+const CreateKYC = () => {
+  const router = useRouter();
+  const [file, setFile] = useState(null);
+  const [addressProofFile, setAddressProofFile] = useState(null);
+  const [idProofType, setIdProofType] = useState("Aadhar Card");
+  const [addressProofType, setAddressProofType] = useState("Electricity Bill");
+
+  const handleBackClick = () => router.push("/profile");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const freelancerId = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+
+    if (!freelancerId || !token) {
+      toast.error("User session expired. Please log in again.");
+      return;
+    }
+
+    if (!file || !addressProofFile) {
+      toast.error("Please upload both files before submitting.");
+      return;
+    }
+
+    const formData1 = new FormData();
+    formData1.append("document", file);
+    formData1.append("idProofType", idProofType);
+
+    const formData2 = new FormData();
+    formData2.append("document", addressProofFile);
+    formData2.append("proofType", addressProofType);
+
+    try {
+      const response1 = await fetch(
+        `https://f-backend-fgtt.onrender.com/resumes/uploadAadharCard/${freelancerId}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData1,
+        }
+      );
+
+      const response2 = await fetch(
+        `https://f-backend-fgtt.onrender.com/resumes/uploadAddressProof/${freelancerId}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: formData2,
+        }
+      );
+
+      if (response1.ok && response2.ok) {
+        toast.success("Both proofs uploaded successfully!");
+        setTimeout(() => router.push("/profile"), 3000);
+      } else {
+        toast.error("Failed to upload proofs.");
+      }
+    } catch (error) {
+      console.error("Error uploading proofs:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
+  return (
+    <>
+    
+      <ToastContainer />
+      <Breadcrumb pageName="Create KYC" />
+
+      <div className="mb-4 flex justify-end">
+        <button
+          type="button"
+          onClick={handleBackClick}
+          className="flex items-center rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700 transition"
+        >
+          <ArrowLeftIcon className="h-5 w-5 mr-2" />
+          Back
+        </button>
+      </div>
+
+    <div className="mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* ID Proof Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Select ID Proof Type</label>
+            <select
+              value={idProofType}
+              onChange={(e) => setIdProofType(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm"
+            >
+              <option value="Aadhar Card">Aadhar Card</option>
+              <option value="Pass Port">Passport</option>
+              <option value="Voter Id">Voter ID</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Upload ID Proof (PDF)</label>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => setFile(e.target.files[0])}
+              className="mt-1 w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm cursor-pointer"
+            />
+          </div>
+        </div>
+
+        {/* Address Proof Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Select Address Proof Type</label>
+            <select
+              value={addressProofType}
+              onChange={(e) => setAddressProofType(e.target.value)}
+              className="mt-1 w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm"
+            >
+              <option value="Electricity Bill">Electricity Bill</option>
+              <option value="Water Bill">Water Bill</option>
+              <option value="Gas Bill">Gas Bill</option>
+              <option value="Other Utility Bill">Other Utility Bill</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Upload Address Proof (PDF)</label>
+            <input
+              type="file"
+              accept="application/pdf"
+              onChange={(e) => setAddressProofFile(e.target.files[0])}
+              className="mt-1 w-full rounded-lg border border-gray-300 bg-gray-50 p-2 text-sm cursor-pointer"
+            />
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            className="rounded-lg bg-blue-600 px-6 py-2 text-white text-sm font-medium hover:bg-blue-700 transition"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+    </>
+  );
+};
+
+export default CreateKYC;

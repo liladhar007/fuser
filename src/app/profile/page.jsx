@@ -171,10 +171,12 @@ const Profile = () => {
                 </p>
                 <p className="pt-3 font-medium">
                 <span className="rounded-sm bg-red-600 p-1 text-boxdark-2">
-  Last Date:{" "}
-  {new Date(
+  Last Date:{" "} {data?.start_date
+    ? new Date(data.start_date).toLocaleDateString("en-GB")
+    : "N/A"}
+  {/* {new Date(
     new Date(data.start_date).setDate(new Date(data.start_date).getDate() + 5)
-  ).toLocaleDateString("en-GB") || "N/A"}
+  ).toLocaleDateString("en-GB") || "N/A"} */}
 </span>
                 </p>
 

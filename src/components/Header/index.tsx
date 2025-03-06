@@ -161,14 +161,19 @@ const Header = (props: {
           </form> */}
           <div className="">
             <h4 className="font-bold text-blue-700">User ID: {userId}</h4>
-            <h5 className="text-black dark:text-white">
+            {/* <h5 className="text-black dark:text-white">
               Last Date: {data?.start_date
   ? new Date(
       new Date(data.start_date).setDate(new Date(data.start_date).getDate() + 5)
     ).toLocaleDateString("en-GB")
   : "N/A"}
-{/* {JSON.stringify(data)} */}
-            </h5>{" "}
+            </h5>{" "} */}
+            <h5 className="text-black dark:text-white">
+  Last Date: {data?.start_date
+    ? new Date(data.start_date).toLocaleDateString("en-GB")
+    : "N/A"}
+</h5>
+
           </div>
         </div>
         {/* ***********************************code by dev ************************ */}
