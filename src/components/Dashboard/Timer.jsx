@@ -83,7 +83,7 @@ const Timer = () => {
   if (loadings) return <div>Loading...</div>;
 
   return (
-    <div className='flex flex-col items-center p-4 rounded-2xl shadow-md bg-white dark:bg-gray-900'>
+    <div className='flex flex-col items-center p-4 rounded-md shadow-md bg-white dark:bg-gray-900'>
       <h2 className='text-lg font-semibold mb-2 text-black dark:text-white'>
         Time Remaining For Submission
       </h2>
