@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { usePathname, useRouter } from "next/navigation";
 import  { ProfileProvider }  from "../context/ProfileContext"; 
+import  { BankDetailsProvider }  from "../context/BankDetailsContext"; 
 
 
 export default function RootLayout({
@@ -65,7 +66,12 @@ export default function RootLayout({
             <Loader />
           ) : (
             // ✅ Wrap children with ProfileProvider
-            <ProfileProvider>{children}</ProfileProvider>
+            <ProfileProvider>
+              <BankDetailsProvider>
+
+              {children}
+              </BankDetailsProvider>
+              </ProfileProvider>
           )}
         </div>
       </body>

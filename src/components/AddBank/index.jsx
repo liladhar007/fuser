@@ -41,7 +41,7 @@ const AddBank = () => {
 
       try {
         const response = await axios.get(
-          `https://freelancify-backend.vercel.app/resumes/getBankDetails/${freelancer_id}`,
+          `http://localhost:3500/resumes/getBankDetails/${freelancer_id}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

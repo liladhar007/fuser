@@ -16,13 +16,16 @@ import {
   AcademicCapIcon,
   BriefcaseIcon,
 } from "@heroicons/react/outline";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "@/components/common/Loader";
 import Link from "next/link";
 import { FiEdit } from "react-icons/fi";
+import { BankDetailsContext } from "@/context/BankDetailsContext";
 
 const Profile = () => {
+  const { bankDetails, loadings } = useContext(BankDetailsContext);
+
   const [data, setData] = useState(null);
   const [documentURL, setDocumentURL] = useState("");
   const [loading, setLoading] = useState(false);
@@ -101,6 +104,8 @@ const Profile = () => {
     router.push(`/addbankdetails`);
   };
 
+
+
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-242.5 p-4">
@@ -171,12 +176,10 @@ const Profile = () => {
                 </p>
                 <p className="pt-3 font-medium">
                 <span className="rounded-sm bg-red-600 p-1 text-boxdark-2">
-  Last Date:{" "} {data?.start_date
-    ? new Date(data.start_date).toLocaleDateString("en-GB")
+  Last Date:{data?.end_date
+    ? new Date(data.end_date).toLocaleDateString("en-GB")
     : "N/A"}
-  {/* {new Date(
-    new Date(data.start_date).setDate(new Date(data.start_date).getDate() + 5)
-  ).toLocaleDateString("en-GB") || "N/A"} */}
+
 </span>
                 </p>
 
@@ -401,6 +404,7 @@ const Profile = () => {
 
                 {/* Action Buttons */}
                 <div className="mt-4 flex justify-center space-x-4">
+
                   <div>
                     {loading ? (
                       <svg
@@ -423,7 +427,9 @@ const Profile = () => {
                           d="M4 12a8 8 0 018-8v8H4z"
                         ></path>
                       </svg>
-                    ) : error ? (
+                    ) 
+                    : error ? ( 
+                      (bankDetails?.id_reject_reason == null ?
                       <div>
                         <button
                           type="button"
@@ -432,8 +438,17 @@ const Profile = () => {
                         >
                           Create KYC
                         </button>
-                      </div>
-                    ) : documentURL ? (
+                      </div>: <div>
+                        <button
+                          type="button"
+                          onClick={handleCreateKYCClick}
+                          className="rounded-lg bg-gradient-to-br from-purple-600 to-blue-500 px-10 py-2.5 text-center text-sm font-medium text-white hover:bg-gradient-to-bl focus:outline-none focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800"
+                        >
+                         Re-Create KYC
+                        </button>
+                      </div> )
+                    ) : documentURL ?
+                     (
                       data.is_approved == true ? (
                         <button
                           type="button"
@@ -455,6 +470,9 @@ const Profile = () => {
                       <p>No Found KYC is prosseing......</p>
                     )}
                   </div>
+                  
+           
+                  
                   <button
                     type="button"
                     onClick={handleAddBankClick}

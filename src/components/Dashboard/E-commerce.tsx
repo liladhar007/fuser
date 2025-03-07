@@ -168,18 +168,34 @@ useEffect(() => {
   </div>
 
   {/* Joining Bonus */}
-  <div className="bg-gradient-to-r from-yellow-900 to-orange-900 text-white rounded-lg p-4 shadow-lg flex justify-between items-center">
+  {/* <div className="bg-gradient-to-r from-yellow-900 to-orange-900 text-white rounded-lg p-4 shadow-lg flex justify-between items-center">
     <div>
       <h3 className="text-sm font-medium">Joining Bonus</h3>
       <p className="text-2xl font-bold">
-        {/* {resumeStats ? resumeStats.joining_bonus : "Loading..."} */}
         2000.00
       </p>
     </div>
     <div className="text-3xl bg-zinc-700 p-2 rounded-md">
     <BiRupee />
     </div>
+  </div> */}
+  <div className="bg-gradient-to-r from-yellow-900 to-orange-900 text-white rounded-lg p-4 shadow-lg flex justify-between items-center relative group">
+  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <p className="text-center text-md font-semibold">
+      Collecting it after submitting more than 500 accurate resumes
+    </p>
   </div>
+
+  <div className="group-hover:opacity-0 transition-opacity duration-300">
+    <h3 className="text-sm font-medium">Joining Bonus</h3>
+    <p className="text-2xl font-bold">2000.00</p>
+  </div>
+
+  <div className="text-3xl bg-zinc-700 p-2 rounded-md group-hover:opacity-0 transition-opacity duration-300">
+    <BiRupee />
+  </div>
+</div>
+
 </div>
 
 
